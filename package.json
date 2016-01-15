@@ -1,6 +1,6 @@
 {
   "name": "sharepoint-auth",
-  "version": "1.0.1",
+  "version": "1.0.3",
   "description": "Sharepoint Authentication using REST API",
   "main": "sharepoint.js",
   "dependencies": {
@@ -12,7 +12,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/pRatikSathaye/sharepoint-auth.git"
+    "url": "git+https://github.com/johndagostino/sharepoint-auth.git"
   },
   "keywords": [
     "sharepoint",
@@ -24,7 +24,7 @@
   "author": "Pratik Sathaye <pratik.sathe1987@gmail.com>",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/pRatikSathaye/sharepoint-auth/issues"
+    "url": "https://github.com/johndagostino/sharepoint-auth/issues"
   },
-  "homepage": "https://github.com/pRatikSathaye/sharepoint-auth#readme"
+  "homepage": "https://github.com/johndagostino/sharepoint-auth#readme"
 }
