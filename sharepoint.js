@@ -71,9 +71,6 @@ module.exports = function(options, callback) {
 
       cb(null, token);
     })
-    .error(function(err) {
-      cb(err);
-    })
     .catch(function(exception) {
       cb(exception);
     });
@@ -94,9 +91,6 @@ module.exports = function(options, callback) {
       var cookies = extractCookies(resp.headers);
 
       callback(null, cookies);
-    })
-    .error(function(err) {
-      callback(err);
     })
     .catch(function(exception) {
       callback(exception);
@@ -130,9 +124,6 @@ module.exports = function(options, callback) {
           rtFa: cookies.rtFa
         }
       });
-    })
-    .error(function(err) {
-      callback(err);
     })
     .catch(function(exception) {
       callback('Exception getting request digest '+ exception);
