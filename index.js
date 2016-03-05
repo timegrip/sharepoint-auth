@@ -36,9 +36,6 @@ Sharepoint(options, function(err, result) {
     .then(function(resp) {
       console.log('Response', resp.body);
     })
-    .error(function(err) {
-      console.log('Error', err);
-    })
     .catch(function(exception) {
       console.log('Exception', exception);
     })
