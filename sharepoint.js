@@ -1,7 +1,7 @@
 var request = require('./request').request,
   async = require('async'),
   fs = require('fs'),
-  parser = require('xml2json'),
+  parser = require('xml2js'),
   path = require('path'),
   _ = require('lodash'),
   saml = fs.readFileSync(__dirname + '/config/saml.xml').toString();
@@ -22,6 +22,14 @@ function getCustomerDomain(host) {
   var hostParts = host.split('://');
   var hostname = hostParts[1].split('/')[0].split('.')[0];
   return hostname;
+}
+
+function xml2js(resp) {
+  return new Promise(function(resolve, reject) {
+    parser.parseString(resp.body, {explicitArray: false}, function(err, result) {
+      err ? reject({message: 'Error parsing XML: ' + err}) : resolve(result);
+    });
+  });
 }
 
 module.exports = function(options, callback) {
@@ -48,14 +56,8 @@ module.exports = function(options, callback) {
     };
 
     request(options)
-    .then(function(resp) {
-      try {
-        var body = parser.toJson(resp.body, {object: true});
-      }
-      catch(err) { 
-        return cb({message: 'Error parsing XML: ' + err});
-      }
-
+    .then(xml2js)
+    .then(function(body) {
       var responseBody = body['S:Envelope']['S:Body'];
       var samlError = responseBody['S:Fault'];
 
@@ -63,7 +65,7 @@ module.exports = function(options, callback) {
         return cb({statusCode: 401, message: 'Error logging in - SAML fault detected.'});
       }
 
-      var token = responseBody['wst:RequestSecurityTokenResponse']['wst:RequestedSecurityToken']['wsse:BinarySecurityToken'].$t;
+      var token = responseBody['wst:RequestSecurityTokenResponse']['wst:RequestedSecurityToken']['wsse:BinarySecurityToken']._;
 
       if (!token) {
         return cb({message: 'No token found in response body'});
