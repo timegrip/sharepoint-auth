@@ -3,13 +3,12 @@ var request = require('./request').request,
   fs = require('fs'),
   parser = require('xml2js'),
   path = require('path'),
-  _ = require('lodash'),
   saml = fs.readFileSync(__dirname + '/config/saml.xml').toString();
 
 
 var extractCookies = function(headers) {
   var cookies = {};
-  _.each(headers['set-cookie'], function(value, key) {
+  headers['set-cookie'].forEach(function(value) {
     var parsedCookies = value.split(/\=(.+)?/);
     parsedCookies[1] = parsedCookies[1].substr(0, parsedCookies[1].indexOf(';'));
     cookies[parsedCookies[0]] = parsedCookies[1];
